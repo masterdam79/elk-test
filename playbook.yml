@@ -1,0 +1,12 @@
+---
+- hosts:
+    - any
+  become: true
+  vars_files:
+    - variables.yml
+    - encrypted_variables.yml
+  tasks:
+  - name: Place hosts files for internal domain resolving
+    template:
+      src: templates/etc/hosts
+      dest: /etc/hosts
