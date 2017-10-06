@@ -1,3 +1,9 @@
 [any]
 elk.test.local ansible_host=192.168.22.205 ansible_ssh_private_key_file=.vagrant/machines/elk/virtualbox/private_key ansible_user=ubuntu
 fb.test.local ansible_host=192.168.22.206 ansible_ssh_private_key_file=.vagrant/machines/fb/virtualbox/private_key ansible_user=ubuntu
+
+[elk]
+elk.test.local ansible_host=192.168.22.205 ansible_ssh_private_key_file=.vagrant/machines/elk/virtualbox/private_key ansible_user=ubuntu
+
+[fb]
+fb.test.local ansible_host=192.168.22.206 ansible_ssh_private_key_file=.vagrant/machines/fb/virtualbox/private_key ansible_user=ubuntu

@@ -10,3 +10,45 @@
     template:
       src: templates/etc/hosts
       dest: /etc/hosts
+- hosts:
+    - elk
+  become: true
+  vars_files:
+    - variables.yml
+    - encrypted_variables.yml
+  tasks:
+  - name: Add Oracle Java Repository
+    become: yes
+    apt_repository:
+      repo: 'ppa:webupd8team/java'
+
+  - name: Accept Java 8 License
+    become: yes
+    debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
+  - name: Install Oracle Java 8
+    become: yes
+    apt: name={{item}} state=latest
+    with_items:
+      - oracle-java8-installer
+      - ca-certificates
+      - oracle-java8-set-default
+
+  - name: Add an apt signing key for Elasticsearch packages
+    apt_key:
+      url: https://packages.elastic.co/GPG-KEY-elasticsearch
+      state: present
+
+  - name: Add an apt repository for Elasticsearch packages
+    apt_repository:
+      repo: deb http://packages.elastic.co/elasticsearch/2.x/debian stable main
+      state: present
+      filename: 'elasticsearch-2.x'
+
+  - name: Install Elasticsearch packages
+    package:
+      name: "{{ item }}"
+      state: present
+      update_cache: yes
+    with_items:
+      - elasticsearch
