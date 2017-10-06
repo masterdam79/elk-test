@@ -1,1 +1,3 @@
 test_domain: 'test.local'
+elasticsearch_packages:
+  - elasticsearch
