@@ -1,4 +1,7 @@
 ---
+
+# Any hosts
+
 - hosts:
     - any
   become: true
@@ -10,6 +13,9 @@
     template:
       src: templates/etc/hosts
       dest: /etc/hosts
+
+# ELK hosts
+
 - hosts:
     - elk
   become: true
@@ -56,6 +62,7 @@
       update_cache: yes
     with_items:
       - "{{ elasticsearch_packages }}"
+
   - name: Make sure Elasticsearch listen on localhost
     lineinfile:
       path: /etc/elasticsearch/elasticsearch.yml
