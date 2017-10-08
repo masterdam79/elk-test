@@ -5,10 +5,6 @@
   vars_files:
     - variables.yml
     - encrypted_variables.yml
-  handlers:
-  - name: restart elasticsearch
-    service: name=elasticsearch state=restarted
-    listen: "restart elasticsearch"
   tasks:
   - name: Place hosts files for internal domain resolving
     template:
@@ -20,6 +16,10 @@
   vars_files:
     - variables.yml
     - encrypted_variables.yml
+  handlers:
+  - name: restart elasticsearch
+    service: name=elasticsearch state=restarted
+    listen: "restart elasticsearch"
   tasks:
   - name: Add Oracle Java Repository
     become: yes
