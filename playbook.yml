@@ -69,3 +69,8 @@
       regexp: '^# network.host: 192.168.0.1'
       line: 'network.host: localhost'
     notify: restart elasticsearch
+
+  - name: Make sure Elasticsearch is started upon boot
+    service:
+      name: httpd
+      enabled: yes
