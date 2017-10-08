@@ -8,6 +8,7 @@ elastic_packages:
   - kibana
   - nginx
   - apache2-utils
+  - python-passlib
 java_packages:
   - oracle-java8-installer
   - ca-certificates

@@ -78,6 +78,10 @@ Vagrant.configure("2") do |config|
     elk.vm.box = "ubuntu/xenial64"
     elk.vm.hostname = "elk.test.local"
     elk.vm.network "private_network", ip: "192.168.22.205"
+    elk.vm.provider :virtualbox do |elkvb|
+        elkvb.customize ["modifyvm", :id, "--memory", "4096"]
+        elkvb.customize ["modifyvm", :id, "--cpus", "2"]
+    end
   end
   config.vm.define "fb" do |fb|
     fb.vm.box = "ubuntu/xenial64"

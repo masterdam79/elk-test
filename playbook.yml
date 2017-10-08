@@ -74,10 +74,12 @@
       update_cache: yes
     with_items:
       - "{{ elastic_packages }}"
+    tags:
+      - packages
 
 # Configure Elasticsearch
 
-  - name: Make sure Elasticsearch listen on localhost
+  - name: Make sure Elasticsearch listens on localhost
     lineinfile:
       path: /etc/elasticsearch/elasticsearch.yml
       regexp: '^# network.host: 192.168.0.1'
@@ -87,7 +89,7 @@
 
 # Configure Kibana
 
-  - name: Make sure Kibana listen on localhost
+  - name: Make sure Kibana listens on localhost
     lineinfile:
       path: /etc/kibana/kibana.yml
       regexp: '^#server.host: "localhost"'
@@ -97,10 +99,31 @@
 
 # Enable services to start up automatically
     
-  - name: Make sure sevices are started upon boot
+  - name: Make sure services are started upon boot
     service:
       name: "{{ item }}"
       enabled: yes
     with_items:
       - "{{ elastic_services }}"
       
+# Configure basic auth
+
+  - name: Configure basic auth
+    htpasswd:
+      path: /etc/nginx/htpasswd.users
+      name: "{{ htpasswd_name }}"
+      password: "{{ htpasswd_password }}"
+      owner: root
+      group: www-data
+      mode: 0640
+
+# Configure nginx
+
+  - name: Place default Nginx config for reverse proxy
+    template:
+      src: templates/etc/nginx/sites-available/default
+      dest: /etc/nginx/sites-available/default
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart services
