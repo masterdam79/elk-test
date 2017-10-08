@@ -9,6 +9,7 @@ elastic_packages:
   - nginx
   - apache2-utils
   - python-passlib
+  - logstash
 java_packages:
   - oracle-java8-installer
   - ca-certificates
