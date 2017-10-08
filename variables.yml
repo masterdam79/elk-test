@@ -1,7 +1,13 @@
 test_domain: 'test.local'
+elastic_services:
+  - elasticsearch
+  - kibana
+  - nginx
 elastic_packages:
   - elasticsearch
   - kibana
+  - nginx
+  - apache2-utils
 java_packages:
   - oracle-java8-installer
   - ca-certificates

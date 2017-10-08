@@ -31,7 +31,7 @@
       name: "{{ item }}"
       state: restarted
     with_items:
-      - "{{ elastic_packages }}"
+      - "{{ elastic_services }}"
 
   tasks:
 
@@ -102,5 +102,5 @@
       name: "{{ item }}"
       enabled: yes
     with_items:
-      - "{{ elastic_packages }}"
+      - "{{ elastic_services }}"
       
