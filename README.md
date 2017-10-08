@@ -4,6 +4,14 @@ This repo contains a Proof of Concept for a Elasticsearch, Logstash and Kibana s
 # Dependencies
 * Virtualbox
 * Vagrant
+* A file called encrypted_variables.yml in this directory
+
+## How to create the encrypted_variables.yml in this directory?
+```
+git clone git@github.com:masterdam79/elk-test.git
+cd elk-test
+ansible-vault create encrypted_variables.yml
+```
 
 # Deployment
 
