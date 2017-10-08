@@ -72,5 +72,5 @@
 
   - name: Make sure Elasticsearch is started upon boot
     service:
-      name: httpd
+      name: elasticsearch
       enabled: yes
