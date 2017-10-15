@@ -4,7 +4,7 @@ This repo contains a Proof of Concept for a Elasticsearch, Logstash and Kibana s
 # Dependencies
 * Virtualbox
 * Vagrant
-* A file called encrypted_variables.yml in this directory
+* A file called encrypted_variables.yml in this directory (included in .gitignore)
 
 ## How to create the encrypted_variables.yml in this directory?
 ```
@@ -13,6 +13,12 @@ cd elk-test
 ansible-vault create encrypted_variables.yml
 ```
 This will prompt you to type a password which is handy to store in your home folder as ~/.vault
+
+The encrypted_variables.yml file will need to have two variables declared:
+```yaml
+htpasswd_name: "<YOURAWESOMEUSERNAME>"
+htpasswd_password: "<YOURAWESOMEPASSWORD>"
+```
 
 # Deployment
 
