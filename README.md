@@ -7,7 +7,7 @@ This repo contains a Proof of Concept for a Elasticsearch, Logstash and Kibana s
 * A file called encrypted_variables.yml in this directory (included in .gitignore)
 
 ## How to create the encrypted_variables.yml in this directory?
-```
+```bash
 git clone git@github.com:masterdam79/elk-test.git
 cd elk-test
 ansible-vault create encrypted_variables.yml
