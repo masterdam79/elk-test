@@ -98,14 +98,14 @@
     notify: restart services
 
 # Enable services to start up automatically
-    
+
   - name: Make sure services are started upon boot
     service:
       name: "{{ item }}"
       enabled: yes
     with_items:
       - "{{ elastic_services }}"
-      
+
 # Configure basic auth
 
   - name: Configure basic auth
@@ -127,3 +127,44 @@
       group: root
       mode: 0644
     notify: restart services
+
+# Configure sites-available
+  - name: Set fact
+    set_fact:
+      ssl_directories: "{{ ssl_certificates }} + {{ ssl_private_keys }}"
+    tags:
+      - directories
+
+  - name: Create SSL directories
+    file:
+      path: "{{ item }}"
+      state: directory
+      mode: 0755
+    with_items:
+      - "{{ ssl_directories }}"
+    tags:
+      - directories
+
+# openssl req -subj '/CN=ELK_server_fqdn/' -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
+
+  - name: Generate a Self Signed OpenSSL certificate
+    command: "openssl req -subj \"/CN={{ ansible_fqdn }}/\" -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout /etc/pki/tls/private/logstash-forwarder.key -out /etc/pki/tls/certs/logstash-forwarder.crt"
+    args:
+        creates:
+          - "/etc/pki/tls/private/logstash-forwarder.key"
+          - "/etc/pki/tls/certs/logstash-forwarder.crt"
+    tags:
+      - openssl
+
+  - name: Place default logstash config
+    template:
+      src: "templates{{ item }}"
+      dest: "{{ item }}"
+      owner: root
+      group: root
+      mode: 0644
+    with_items:
+      - "{{ logstash_config_files }}"
+    notify: restart services
+    tags:
+      - logstash

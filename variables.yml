@@ -1,8 +1,13 @@
 test_domain: 'test.local'
+ssl_certificates: "/etc/pki/tls/certs"
+ssl_private_keys: "/etc/pki/tls/private"
+logstash_port: "5044"
+
 elastic_services:
   - elasticsearch
   - kibana
   - nginx
+  - logstash
 elastic_packages:
   - elasticsearch
   - kibana
@@ -14,3 +19,8 @@ java_packages:
   - oracle-java8-installer
   - ca-certificates
   - oracle-java8-set-default
+
+logstash_config_files:
+  - /etc/logstash/conf.d/02-beats-input.conf
+  - /etc/logstash/conf.d/10-syslog-filter.conf
+  - /etc/logstash/conf.d/30-elasticsearch-output.conf
